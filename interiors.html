@@ -12,7 +12,7 @@
     .category-grid { display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center;margin-top:40px; }
     .category-grid.reverse { direction:rtl; }
     .category-grid.reverse > * { direction:ltr; }
-    .category-img { aspect-ratio:16/10;background:var(--graphite);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;border:1px dashed var(--gold-border); }
+    .category-img { aspect-ratio:16/10;object-fit:cover;width:100%;height:100%;border:1px solid var(--gold-border);border-radius:4px; }
     .category-img i { font-size:2rem;color:var(--gold-border); }
     .category-img span { font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-grey); }
     .service-list { display:flex;flex-direction:column;gap:10px;margin:1.5rem 0; }
@@ -82,9 +82,7 @@
     <!-- Apartments -->
     <div class="category-section">
       <div class="category-grid">
-        <div class="category-img reveal">
-          <i class="fas fa-building"></i><span>Apartment Interior Photo</span>
-        </div>
+        <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1200&q=80" alt="Apartment Interior" class="category-img reveal" style="object-fit:cover;width:100%;height:100%;min-height:300px;border-radius:4px;border:1px solid var(--gold-border);">
         <div class="reveal reveal-delay-2">
           <div class="section-label">Residential</div>
           <h3>APARTMENT INTERIORS</h3>
@@ -106,9 +104,7 @@
     <!-- Individual Homes -->
     <div class="category-section">
       <div class="category-grid reverse">
-        <div class="category-img reveal">
-          <i class="fas fa-home"></i><span>Individual Home Interior Photo</span>
-        </div>
+        <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1200&q=80" alt="Individual Home Interior" class="category-img reveal" style="object-fit:cover;width:100%;height:100%;min-height:300px;border-radius:4px;border:1px solid var(--gold-border);">
         <div class="reveal reveal-delay-2">
           <div class="section-label">Residential</div>
           <h3>INDIVIDUAL HOMES</h3>
@@ -129,9 +125,7 @@
     <!-- Villas -->
     <div class="category-section">
       <div class="category-grid">
-        <div class="category-img reveal">
-          <i class="fas fa-star"></i><span>Villa Interior Photo</span>
-        </div>
+        <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=80" alt="Villa Interior" class="category-img reveal" style="object-fit:cover;width:100%;height:100%;min-height:300px;border-radius:4px;border:1px solid var(--gold-border);">
         <div class="reveal reveal-delay-2">
           <div class="section-label">Residential</div>
           <h3>VILLA INTERIORS</h3>

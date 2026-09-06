@@ -40,7 +40,21 @@ const DB = {
 
   // ── Projects ──────────────────────────────────────────────
   getProjects() {
-    return this.get(this.KEYS.PROJECTS) || this._defaultProjects();
+    const categoryDefaults = {
+      'interiors': 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1200&q=80',
+      'individual-homes': 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1200&q=80',
+      'offices': 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80',
+      'villas': 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=80',
+      'exterior-elevations': 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80',
+      'construction': 'https://images.unsplash.com/photo-1541888946425-d0fbb186a5b3?auto=format&fit=crop&w=1200&q=80',
+    };
+    const projects = this.get(this.KEYS.PROJECTS) || this._defaultProjects();
+    return projects.map(p => {
+      if (!p.image || p.image.trim() === '') {
+        p.image = categoryDefaults[p.category] || 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1200&q=80';
+      }
+      return p;
+    });
   },
   saveProjects(data) { return this.set(this.KEYS.PROJECTS, data); },
   addProject(project) {
