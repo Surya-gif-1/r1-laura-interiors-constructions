@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Enquiries — R1 Laura Admin</title>
+  <link rel="stylesheet" href="../css/admin.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+<div class="admin-layout">
+  <aside class="sidebar">
+    <div class="sidebar-logo"><img src="../assets/logos/logo-primary.png" alt="R1 Laura"><div class="sidebar-brand"><div class="sidebar-brand-name">R1 LAURA</div><div class="sidebar-brand-sub">Construction &amp; Interiors</div></div></div>
+    <div class="sidebar-admin-badge"><i class="fas fa-shield-alt"></i>Admin Panel</div>
+    <nav class="sidebar-nav">
+      <div class="sidebar-section-label">Main</div>
+      <a href="dashboard.html" class="sidebar-link"><i class="fas fa-th-large"></i>Dashboard</a>
+      <a href="enquiries.html" class="sidebar-link active"><i class="fas fa-envelope"></i>Enquiries</a>
+      <div class="sidebar-section-label">Content</div>
+      <a href="projects.html" class="sidebar-link"><i class="fas fa-images"></i>Projects</a>
+      <a href="testimonials.html" class="sidebar-link"><i class="fas fa-quote-left"></i>Testimonials</a>
+      <a href="services.html" class="sidebar-link"><i class="fas fa-concierge-bell"></i>Services</a>
+      <div class="sidebar-section-label">Settings</div>
+      <a href="settings.html" class="sidebar-link"><i class="fas fa-cog"></i>Site Settings</a>
+      <a href="../index.html" class="sidebar-link" target="_blank"><i class="fas fa-external-link-alt"></i>View Website</a>
+    </nav>
+    <div class="sidebar-footer"><button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i>Logout</button></div>
+  </aside>
+
+  <main class="admin-main">
+    <div class="admin-topbar">
+      <div><div class="topbar-title">Enquiries</div><div class="topbar-sub">Manage customer enquiries</div></div>
+    </div>
+    <div class="admin-content">
+
+      <!-- Filter bar -->
+      <div class="search-bar">
+        <div class="search-input-wrap">
+          <i class="fas fa-search"></i>
+          <input type="text" class="search-input" id="search-enquiries" placeholder="Search by name, phone, requirement...">
+        </div>
+        <select class="form-control" id="filter-status" style="width:auto;min-width:140px;">
+          <option value="all">All Status</option>
+          <option value="NEW">New</option>
+          <option value="CONTACTED">Contacted</option>
+          <option value="FOLLOW-UP">Follow-Up</option>
+          <option value="CONVERTED">Converted</option>
+          <option value="CLOSED">Closed</option>
+        </select>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title"><i class="fas fa-envelope" style="color:var(--gold);margin-right:8px;"></i>All Enquiries <span id="enquiry-count" style="font-size:0.75rem;color:var(--text-grey);font-weight:400;margin-left:8px;"></span></div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th><th>Phone</th><th>Property</th><th>Requirement</th><th>Budget</th><th>Date</th><th>Status</th><th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="enquiries-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Detail Modal -->
+<div class="modal-bg" id="detail-modal">
+  <div class="modal" style="max-width:640px;">
+    <div class="modal-header">
+      <div class="modal-title">Enquiry Details</div>
+      <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="modal-body" id="modal-detail-body"></div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal()">Close</button>
+    </div>
+  </div>
+</div>
+
+<script src="../js/data.js"></script>
+<script>
+  if (typeof DB !== 'undefined' && !DB.isLoggedIn()) window.location.href = 'index.html';
+  function logout() { if(typeof DB!=='undefined') DB.logout(); window.location.href='index.html'; }
+
+  let allEnquiries = [];
+  let filtered = [];
+
+  function renderEnquiries(list) {
+    const tbody = document.getElementById('enquiries-body');
+    document.getElementById('enquiry-count').textContent = `(${list.length})`;
+    if (!list.length) {
+      tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state"><i class="fas fa-inbox"></i><h4>No Enquiries</h4><p>Customer enquiries will appear here.</p></div></td></tr>`;
+      return;
+    }
+    tbody.innerHTML = list.map(e => `
+      <tr>
+        <td style="color:var(--white);font-weight:500;">${e.name}</td>
+        <td><a href="tel:+91${e.phone}" style="color:var(--gold);">${e.phone}</a></td>
+        <td style="font-size:0.82rem;">${e.propertyType || '—'}</td>
+        <td style="font-size:0.82rem;">${e.requirement || '—'}</td>
+        <td style="font-size:0.78rem;color:var(--text-grey);">${e.budget || '—'}</td>
+        <td style="font-size:0.78rem;color:var(--text-grey);">${new Date(e.createdAt).toLocaleDateString('en-IN')}</td>
+        <td>
+          <select class="form-control" style="padding:5px 10px;font-size:0.72rem;width:auto;" onchange="updateStatus('${e.id}', this.value)">
+            ${['NEW','CONTACTED','FOLLOW-UP','CONVERTED','CLOSED'].map(s=>`<option value="${s}" ${e.status===s?'selected':''}>${s}</option>`).join('')}
+          </select>
+        </td>
+        <td>
+          <div style="display:flex;gap:6px;">
+            <button class="btn btn-outline btn-sm btn-icon" onclick="viewDetail('${e.id}')" title="View"><i class="fas fa-eye"></i></button>
+            <a href="https://wa.me/91${e.phone}?text=${encodeURIComponent('Hello '+e.name+', This is R1 Laura. We received your enquiry about '+e.requirement+'. Please let us know a convenient time to discuss your project.')}" target="_blank" class="btn btn-sm" style="background:rgba(37,211,102,0.1);color:#25D366;border:1px solid rgba(37,211,102,0.3);" title="WhatsApp"><i class="fab fa-whatsapp"></i></button>
+            <a href="tel:+91${e.phone}" class="btn btn-outline btn-sm btn-icon" title="Call"><i class="fas fa-phone"></i></a>
+            <button class="btn btn-danger btn-sm btn-icon" onclick="deleteEnquiry('${e.id}')" title="Delete"><i class="fas fa-trash"></i></button>
+          </div>
+        </td>
+      </tr>
+    `).join('');
+  }
+
+  function applyFilter() {
+    const search = document.getElementById('search-enquiries').value.toLowerCase();
+    const status = document.getElementById('filter-status').value;
+    filtered = allEnquiries.filter(e => {
+      const matchSearch = !search || e.name.toLowerCase().includes(search) || e.phone.includes(search) || (e.requirement||'').toLowerCase().includes(search);
+      const matchStatus = status === 'all' || e.status === status;
+      return matchSearch && matchStatus;
+    });
+    renderEnquiries(filtered);
+  }
+
+  function updateStatus(id, status) {
+    if(typeof DB!=='undefined') DB.updateEnquiryStatus(id, status);
+    allEnquiries = typeof DB!=='undefined' ? DB.getEnquiries() : [];
+    applyFilter();
+  }
+
+  function deleteEnquiry(id) {
+    if (!confirm('Delete this enquiry?')) return;
+    if(typeof DB!=='undefined') DB.deleteEnquiry(id);
+    allEnquiries = typeof DB!=='undefined' ? DB.getEnquiries() : [];
+    applyFilter();
+  }
+
+  function viewDetail(id) {
+    const e = allEnquiries.find(x => x.id === id);
+    if (!e) return;
+    document.getElementById('modal-detail-body').innerHTML = `
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+        <div><div style="font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:4px;">Name</div><div style="color:var(--white);font-weight:600;">${e.name}</div></div>
+        <div><div style="font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:4px;">Phone</div><div><a href="tel:+91${e.phone}" style="color:var(--white);">${e.phone}</a></div></div>
+        ${e.whatsapp?`<div><div style="font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:4px;">WhatsApp</div><div style="color:var(--white);">${e.whatsapp}</div></div>`:''}
+        ${e.email?`<div><div style="font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:4px;">Email</div><div style="color:var(--white);">${e.email}</div></div>`:''}
+        <div><div style="font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:4px;">Location</div><div style="color:var(--white);">${e.location||'—'}</div></div>
+        <div><div style="font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:4px;">Property Type</div><div style="color:var(--white);">${e.propertyType||'—'}</div></div>
+        <div><div style="font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:4px;">Requirement</div><div style="color:var(--white);">${e.requirement||'—'}</div></div>
+        <div><div style="font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:4px;">Area</div><div style="color:var(--white);">${e.area||'—'}</div></div>
+        <div><div style="font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:4px;">Budget</div><div style="color:var(--white);">${e.budget||'—'}</div></div>
+        <div><div style="font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:4px;">Date</div><div style="color:var(--white);">${new Date(e.createdAt).toLocaleString('en-IN')}</div></div>
+      </div>
+      ${e.description?`<div style="padding:16px;background:var(--charcoal);border:1px solid rgba(255,255,255,0.06);"><div style="font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;">Project Description</div><p style="color:var(--text-light);font-size:0.9rem;">${e.description}</p></div>`:''}
+      <div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap;">
+        <a href="tel:+91${e.phone}" class="btn btn-outline btn-sm"><i class="fas fa-phone"></i>Call</a>
+        <a href="https://wa.me/91${e.phone}" target="_blank" class="btn btn-sm" style="background:rgba(37,211,102,0.1);color:#25D366;border:1px solid rgba(37,211,102,0.3);"><i class="fab fa-whatsapp"></i>WhatsApp</a>
+      </div>
+    `;
+    document.getElementById('detail-modal').classList.add('open');
+  }
+
+  function closeModal() { document.getElementById('detail-modal').classList.remove('open'); }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    allEnquiries = typeof DB !== 'undefined' ? DB.getEnquiries() : [];
+    renderEnquiries(allEnquiries);
+    document.getElementById('search-enquiries').addEventListener('input', applyFilter);
+    document.getElementById('filter-status').addEventListener('change', applyFilter);
+  });
+</script>
+</body>
+</html>

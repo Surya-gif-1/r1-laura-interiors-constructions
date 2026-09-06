@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projects | R1 Laura — 2500+ Completed Projects in Visakhapatnam</title>
+  <meta name="description" content="Explore R1 Laura's project portfolio — 2500+ completed interiors, construction and exterior elevation projects across Visakhapatnam.">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    .lightbox-info { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:12px; }
+    .lb-info-item { font-size:0.78rem; color:var(--text-grey); }
+    .lb-info-item strong { color:var(--gold); display:block; font-size:0.62rem; letter-spacing:0.15em; text-transform:uppercase; margin-bottom:2px; }
+  </style>
+</head>
+<body>
+<nav id="main-nav" class="scrolled">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><img src="assets/logos/logo-primary.png" alt="R1 Laura"></a>
+    <div class="nav-links">
+      <a href="index.html">Home</a><a href="about.html">About</a><a href="interiors.html">Interiors</a><a href="constructions.html">Constructions</a><a href="projects.html" class="active">Projects</a><a href="services.html">Services</a><a href="contact.html">Contact</a>
+    </div>
+    <div class="nav-actions">
+      <a href="#" class="nav-wa-btn" data-wa><i class="fab fa-whatsapp"></i> WhatsApp</a>
+      <a href="index.html#enquiry" class="nav-quote-btn">Get a Quote</a>
+    </div>
+    <button class="nav-toggle" id="nav-toggle"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobile-menu">
+  <button id="mobile-close" style="position:absolute;top:24px;right:24px;background:none;border:none;color:var(--white);font-size:1.5rem;cursor:pointer;"><i class="fas fa-times"></i></button>
+  <a href="index.html">Home</a><a href="about.html">About</a><a href="interiors.html">Interiors</a><a href="constructions.html">Constructions</a><a href="projects.html">Projects</a><a href="services.html">Services</a><a href="contact.html">Contact</a>
+  <div class="mobile-menu-actions">
+    <a href="#" class="btn btn-gold" data-wa><i class="fab fa-whatsapp"></i><span>WhatsApp</span></a>
+    <a href="tel:+917330840545" class="btn btn-outline"><i class="fas fa-phone"></i><span>Call</span></a>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="page-hero" style="min-height:55vh;background:var(--dark-section);display:flex;align-items:center;">
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 60% 40%, rgba(201,168,76,0.08) 0%, transparent 55%);"></div>
+  <div class="container page-hero-content" style="position:relative;z-index:1;padding-top:120px;padding-bottom:60px;">
+    <div class="breadcrumb"><a href="index.html">Home</a><i class="fas fa-chevron-right"></i><span>Projects</span></div>
+    <div class="section-label">Our Portfolio</div>
+    <h1>25+ YEARS.<br><span style="color:var(--gold);">2500+ SPACES. COUNTLESS STORIES.</span></h1>
+    <p style="max-width:580px;margin-top:1rem;">A curated selection from over 2500 projects — apartments, homes, villas, offices, exterior elevations and construction projects across Visakhapatnam.</p>
+  </div>
+</section>
+
+<!-- PROJECTS GALLERY -->
+<section class="projects-section" style="padding:80px 0;">
+  <div class="container">
+    <!-- Filter Tabs -->
+    <div class="filter-tabs">
+      <button class="filter-tab active" data-filter="all">All</button>
+      <button class="filter-tab" data-filter="interiors">Interiors</button>
+      <button class="filter-tab" data-filter="apartments">Apartments</button>
+      <button class="filter-tab" data-filter="individual-homes">Individual Homes</button>
+      <button class="filter-tab" data-filter="villas">Villas</button>
+      <button class="filter-tab" data-filter="offices">Offices</button>
+      <button class="filter-tab" data-filter="exterior-elevations">Exterior Elevations</button>
+      <button class="filter-tab" data-filter="construction">Construction</button>
+    </div>
+    <!-- Projects Grid (JS populated) -->
+    <div class="projects-grid" id="projects-grid"></div>
+    <!-- CTA -->
+    <div style="text-align:center;margin-top:60px;" class="reveal">
+      <p style="color:var(--text-grey);margin-bottom:1.5rem;font-size:0.9rem;">Have a project in mind? Let's discuss your requirements.</p>
+      <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+        <a href="index.html#enquiry" class="btn btn-gold"><i class="fas fa-comments"></i><span>Get a Free Quote</span></a>
+        <a href="#" class="btn btn-outline" data-wa><i class="fab fa-whatsapp"></i><span>WhatsApp Us</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <div class="lightbox-inner" style="width:min(800px,90vw);">
+    <div class="lightbox-close" onclick="closeLightbox()"><i class="fas fa-times"></i></div>
+    <img id="lb-img" src="" alt="" class="lightbox-img" style="width:100%;max-height:60vh;object-fit:contain;">
+    <div class="lightbox-caption" style="text-align:left;margin-top:20px;padding:0 4px;">
+      <h3 id="lb-title" style="font-family:var(--font-serif);color:var(--white);font-size:1.4rem;margin-bottom:8px;"></h3>
+      <div class="lightbox-info">
+        <div class="lb-info-item"><strong>Type</strong><span id="lb-type"></span></div>
+        <div class="lb-info-item"><strong>Location</strong><span id="lb-location"></span></div>
+        <div class="lb-info-item"><strong>Year</strong><span id="lb-year"></span></div>
+        <div class="lb-info-item"><strong>Area</strong><span id="lb-area"></span></div>
+      </div>
+      <p id="lb-desc" style="margin-top:12px;font-size:0.9rem;color:var(--text-grey);line-height:1.7;"></p>
+      <div style="margin-top:16px;display:flex;gap:12px;flex-wrap:wrap;">
+        <a href="index.html#enquiry" class="btn btn-gold btn-sm"><span>Similar Project Enquiry</span></a>
+        <a href="#" class="btn btn-outline btn-sm" data-wa><i class="fab fa-whatsapp"></i><span>WhatsApp</span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand"><img src="assets/logos/logo-primary.png" alt="R1 Laura"><div class="footer-brand-name">R1 LAURA</div><div class="footer-brand-sub">Construction &amp; Interiors</div><p>25+ years of experience transforming spaces across Visakhapatnam.</p></div>
+      <div class="footer-col"><h5>Pages</h5><div class="footer-links"><a href="index.html">Home</a><a href="about.html">About</a><a href="interiors.html">Interiors</a><a href="constructions.html">Constructions</a><a href="projects.html">Projects</a><a href="contact.html">Contact</a></div></div>
+      <div class="footer-col"><h5>Project Types</h5><div class="footer-links"><a href="projects.html">Apartment Interiors</a><a href="projects.html">Home Interiors</a><a href="projects.html">Villa Interiors</a><a href="projects.html">Office Interiors</a><a href="projects.html">Construction</a></div></div>
+      <div class="footer-col"><h5>Contact</h5>
+        <div class="footer-contact-item"><i class="fas fa-phone"></i><span><a href="tel:+917330840545">+91 73308 40545</a></span></div>
+        <div class="footer-contact-item"><i class="fab fa-whatsapp"></i><span><a href="#" data-wa>WhatsApp Us</a></span></div>
+        <div class="footer-contact-item"><i class="fas fa-map-marker-alt"></i><span>Visakhapatnam, AP</span></div>
+      </div>
+    </div>
+    <div class="footer-bottom"><div class="footer-copy">© 2026 <span>R1 Laura</span>. All Rights Reserved.</div><a href="admin/index.html" style="font-size:0.72rem;color:var(--text-grey);opacity:0.4;">Admin</a></div>
+  </div>
+</footer>
+<div class="floating-btns">
+  <a href="tel:+917330840545" class="float-btn float-call"><i class="fas fa-phone"></i><div class="float-btn-tooltip">Call Now</div></a>
+  <a href="#" class="float-btn float-wa" data-wa><i class="fab fa-whatsapp"></i><div class="float-btn-tooltip">WhatsApp</div></a>
+</div>
+<script src="js/data.js"></script><script src="js/main.js"></script><script src="js/projects.js"></script>
+</body>
+</html>

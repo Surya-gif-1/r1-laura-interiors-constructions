@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>R1 Laura Interiors | Interior Design Services in Visakhapatnam</title>
+  <meta name="description" content="R1 Laura Interiors — 25+ years of crafting beautiful spaces. Apartment interiors, home interiors, villa interiors, office interiors and more in Visakhapatnam.">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    .category-section { padding:60px 0; border-bottom:1px solid rgba(255,255,255,0.05); }
+    .category-grid { display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center;margin-top:40px; }
+    .category-grid.reverse { direction:rtl; }
+    .category-grid.reverse > * { direction:ltr; }
+    .category-img { aspect-ratio:16/10;background:var(--graphite);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;border:1px dashed var(--gold-border); }
+    .category-img i { font-size:2rem;color:var(--gold-border); }
+    .category-img span { font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-grey); }
+    .service-list { display:flex;flex-direction:column;gap:10px;margin:1.5rem 0; }
+    .service-list-item { display:flex;align-items:center;gap:12px;font-size:0.9rem;color:var(--text-light); }
+    .service-list-item i { color:var(--gold);font-size:0.8rem;width:16px; }
+    @media(max-width:768px){.category-grid{grid-template-columns:1fr;}.category-grid.reverse{direction:ltr;}}
+  </style>
+</head>
+<body>
+<nav id="main-nav" class="scrolled">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><img src="assets/logos/logo-primary.png" alt="R1 Laura"></a>
+    <div class="nav-links">
+      <a href="index.html">Home</a><a href="about.html">About</a><a href="interiors.html" class="active">Interiors</a><a href="constructions.html">Constructions</a><a href="projects.html">Projects</a><a href="services.html">Services</a><a href="contact.html">Contact</a>
+    </div>
+    <div class="nav-actions">
+      <a href="#" class="nav-wa-btn" data-wa><i class="fab fa-whatsapp"></i> WhatsApp</a>
+      <a href="index.html#enquiry" class="nav-quote-btn">Get a Quote</a>
+    </div>
+    <button class="nav-toggle" id="nav-toggle"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobile-menu">
+  <button id="mobile-close" style="position:absolute;top:24px;right:24px;background:none;border:none;color:var(--white);font-size:1.5rem;cursor:pointer;"><i class="fas fa-times"></i></button>
+  <a href="index.html">Home</a><a href="about.html">About</a><a href="interiors.html">Interiors</a><a href="constructions.html">Constructions</a><a href="projects.html">Projects</a><a href="services.html">Services</a><a href="contact.html">Contact</a>
+  <div class="mobile-menu-actions">
+    <a href="#" class="btn btn-gold" data-wa><i class="fab fa-whatsapp"></i><span>WhatsApp</span></a>
+    <a href="tel:+917330840545" class="btn btn-outline"><i class="fas fa-phone"></i><span>Call</span></a>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="page-hero" style="min-height:70vh;background:var(--dark-section);display:flex;align-items:center;">
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 70% 40%, rgba(201,168,76,0.1) 0%, transparent 55%);"></div>
+  <div class="container page-hero-content" style="position:relative;z-index:1;padding-top:120px;padding-bottom:60px;">
+    <div class="breadcrumb"><a href="index.html">Home</a><i class="fas fa-chevron-right"></i><span>Interiors</span></div>
+    <div class="section-label">R1 Laura Interiors</div>
+    <h1>25+ YEARS OF CRAFTING<br><span style="color:var(--gold);">BEAUTIFUL SPACES.</span></h1>
+    <p style="max-width:580px;margin-top:1rem;">From apartments to villas, offices to individual homes — R1 Laura Interiors brings design expertise, quality materials and precise execution to every space.</p>
+    <div style="display:flex;gap:16px;margin-top:2rem;flex-wrap:wrap;">
+      <a href="index.html#enquiry" class="btn btn-gold"><i class="fas fa-comments"></i><span>Discuss Your Project</span></a>
+      <a href="projects.html" class="btn btn-outline"><span>View Projects</span><i class="fas fa-arrow-right"></i></a>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats-strip">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-item reveal"><div class="stat-number" data-count="25" data-suffix="+">25+</div><div class="stat-label">Years of Experience</div></div>
+      <div class="stat-item reveal reveal-delay-1"><div class="stat-number" data-count="2500" data-suffix="+">2500+</div><div class="stat-label">Projects Completed</div></div>
+      <div class="stat-item reveal reveal-delay-2"><div class="stat-number">2</div><div class="stat-label">Divisions</div></div>
+      <div class="stat-item reveal reveal-delay-3"><div class="stat-number">VSP</div><div class="stat-label">Visakhapatnam</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- RESIDENTIAL -->
+<section class="section-pad" style="background:var(--black);">
+  <div class="container">
+    <div class="reveal" style="text-align:center;margin-bottom:50px;">
+      <div class="section-label" style="display:block;text-align:center;margin-bottom:1rem;">Residential Interiors</div>
+      <h2>HOMES DESIGNED FOR <span style="color:var(--gold);">LIVING</span></h2>
+    </div>
+
+    <!-- Apartments -->
+    <div class="category-section">
+      <div class="category-grid">
+        <div class="category-img reveal">
+          <i class="fas fa-building"></i><span>Apartment Interior Photo</span>
+        </div>
+        <div class="reveal reveal-delay-2">
+          <div class="section-label">Residential</div>
+          <h3>APARTMENT INTERIORS</h3>
+          <p>Complete interior solutions for apartments of all sizes — from compact 2BHK units to premium 4BHK and luxury apartments.</p>
+          <div class="service-list">
+            <div class="service-list-item"><i class="fas fa-check"></i>Living & Dining Rooms</div>
+            <div class="service-list-item"><i class="fas fa-check"></i>Master & Guest Bedrooms</div>
+            <div class="service-list-item"><i class="fas fa-check"></i>Modular Kitchens</div>
+            <div class="service-list-item"><i class="fas fa-check"></i>Wardrobes & Storage</div>
+            <div class="service-list-item"><i class="fas fa-check"></i>False Ceilings & Lighting</div>
+            <div class="service-list-item"><i class="fas fa-check"></i>TV Units & Panelling</div>
+            <div class="service-list-item"><i class="fas fa-check"></i>Complete Interior Execution</div>
+          </div>
+          <a href="index.html#enquiry" class="btn btn-gold"><span>Discuss Your Apartment</span><i class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Individual Homes -->
+    <div class="category-section">
+      <div class="category-grid reverse">
+        <div class="category-img reveal">
+          <i class="fas fa-home"></i><span>Individual Home Interior Photo</span>
+        </div>
+        <div class="reveal reveal-delay-2">
+          <div class="section-label">Residential</div>
+          <h3>INDIVIDUAL HOMES</h3>
+          <p>Full interior execution for individual houses and independent homes — crafted with personal attention to every detail and the client's unique requirements.</p>
+          <div class="service-list">
+            <div class="service-list-item"><i class="fas fa-check"></i>Complete Home Interior Design</div>
+            <div class="service-list-item"><i class="fas fa-check"></i>Living, Dining & Family Areas</div>
+            <div class="service-list-item"><i class="fas fa-check"></i>All Bedrooms & Bathrooms</div>
+            <div class="service-list-item"><i class="fas fa-check"></i>Kitchen & Utility Areas</div>
+            <div class="service-list-item"><i class="fas fa-check"></i>Staircase & Passage Treatments</div>
+            <div class="service-list-item"><i class="fas fa-check"></i>Custom Furniture & Joinery</div>
+          </div>
+          <a href="index.html#enquiry" class="btn btn-gold"><span>Discuss Your Home</span><i class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Villas -->
+    <div class="category-section">
+      <div class="category-grid">
+        <div class="category-img reveal">
+          <i class="fas fa-star"></i><span>Villa Interior Photo</span>
+        </div>
+        <div class="reveal reveal-delay-2">
+          <div class="section-label">Residential</div>
+          <h3>VILLA INTERIORS</h3>
+          <p>Premium villa interior execution combining luxury materials, custom designs and detailed craftsmanship for expansive, high-end residential spaces.</p>
+          <div class="service-list">
+            <div class="service-list-item"><i class="fas fa-check"></i>Luxury Living Spaces</div>
+            <div class="service-list-item"><i class="fas fa-check"></i>Premium Bedrooms & Suites</div>
+            <div class="service-list-item"><i class="fas fa-check"></i>Custom Kitchens & Pantries</div>
+            <div class="service-list-item"><i class="fas fa-check"></i>Home Theatres & Study Rooms</div>
+            <div class="service-list-item"><i class="fas fa-check"></i>Feature Walls & Ceilings</div>
+            <div class="service-list-item"><i class="fas fa-check"></i>Complete Turnkey Execution</div>
+          </div>
+          <a href="index.html#enquiry" class="btn btn-gold"><span>Discuss Your Villa</span><i class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMMERCIAL -->
+<section class="section-pad" style="background:var(--dark-section);">
+  <div class="container">
+    <div class="reveal" style="text-align:center;margin-bottom:50px;">
+      <div class="section-label" style="display:block;text-align:center;margin-bottom:1rem;">Commercial Interiors</div>
+      <h2>SPACES DESIGNED FOR <span style="color:var(--gold);">PRODUCTIVITY</span></h2>
+    </div>
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <div class="service-card-icon"><i class="fas fa-briefcase"></i></div>
+        <h4>Office Interiors</h4>
+        <p>Professional office interiors combining functionality, brand identity and modern aesthetics for productive work environments.</p>
+        <div style="margin-top:16px;"><a href="index.html#enquiry" class="btn btn-outline btn-sm"><span>Get Quote</span></a></div>
+      </div>
+      <div class="service-card reveal reveal-delay-1">
+        <div class="service-card-icon"><i class="fas fa-store"></i></div>
+        <h4>Commercial Spaces</h4>
+        <p>Interior design and execution for shops, showrooms, retail spaces and commercial establishments.</p>
+        <div style="margin-top:16px;"><a href="index.html#enquiry" class="btn btn-outline btn-sm"><span>Get Quote</span></a></div>
+      </div>
+      <div class="service-card reveal reveal-delay-2">
+        <div class="service-card-icon"><i class="fas fa-clinic-medical"></i></div>
+        <h4>Other Commercial</h4>
+        <p>Specialized interior works for clinics, educational spaces, hospitality and other commercial environments.</p>
+        <div style="margin-top:16px;"><a href="index.html#enquiry" class="btn btn-outline btn-sm"><span>Get Quote</span></a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SPECIALIZED WORKS -->
+<section class="section-pad" style="background:var(--charcoal);">
+  <div class="container">
+    <div class="reveal" style="text-align:center;margin-bottom:50px;">
+      <div class="section-label" style="display:block;text-align:center;margin-bottom:1rem;">Specialized Works</div>
+      <h2>EVERY DETAIL <span style="color:var(--gold);">MATTERS</span></h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--gold-border);border:1px solid var(--gold-border);">
+      <div class="why-card reveal" style="background:var(--graphite);">
+        <div class="why-icon"><i class="fas fa-utensils"></i></div>
+        <h4>Modular Kitchens</h4>
+        <p>Custom modular kitchen design with quality materials and smart storage solutions.</p>
+      </div>
+      <div class="why-card reveal reveal-delay-1" style="background:var(--graphite);">
+        <div class="why-icon"><i class="fas fa-door-open"></i></div>
+        <h4>Wardrobes</h4>
+        <p>Custom wardrobe solutions — walk-in and fitted — designed for maximum utility.</p>
+      </div>
+      <div class="why-card reveal reveal-delay-2" style="background:var(--graphite);">
+        <div class="why-icon"><i class="fas fa-layer-group"></i></div>
+        <h4>False Ceilings</h4>
+        <p>Premium false ceiling designs with integrated lighting for a refined finished look.</p>
+      </div>
+      <div class="why-card reveal reveal-delay-3" style="background:var(--graphite);">
+        <div class="why-icon"><i class="fas fa-lightbulb"></i></div>
+        <h4>Lighting Design</h4>
+        <p>Curated lighting plans that enhance the mood, function and aesthetics of every space.</p>
+      </div>
+      <div class="why-card reveal" style="background:var(--graphite);">
+        <div class="why-icon"><i class="fas fa-tv"></i></div>
+        <h4>TV Units</h4>
+        <p>Custom-designed TV units and entertainment walls with integrated storage and panelling.</p>
+      </div>
+      <div class="why-card reveal reveal-delay-1" style="background:var(--graphite);">
+        <div class="why-icon"><i class="fas fa-bed"></i></div>
+        <h4>Bedroom Design</h4>
+        <p>Complete bedroom interior design with furniture, flooring, walls and lighting.</p>
+      </div>
+      <div class="why-card reveal reveal-delay-2" style="background:var(--graphite);">
+        <div class="why-icon"><i class="fas fa-couch"></i></div>
+        <h4>Living Rooms</h4>
+        <p>Thoughtfully designed living spaces that blend comfort, style and function seamlessly.</p>
+      </div>
+      <div class="why-card reveal reveal-delay-3" style="background:var(--graphite);">
+        <div class="why-icon"><i class="fas fa-hammer"></i></div>
+        <h4>Complete Execution</h4>
+        <p>Full interior execution from design through to handover — all under one roof.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section-pad-sm" style="background:var(--black);">
+  <div class="container text-center reveal">
+    <div class="section-label" style="display:block;text-align:center;margin-bottom:1rem;">Start Your Project</div>
+    <h2 style="margin-bottom:1rem;">DISCUSS YOUR<br><span style="color:var(--gold);">INTERIOR PROJECT</span></h2>
+    <p style="max-width:500px;margin:0 auto 2rem;">Share your requirements and we'll get in touch to understand your vision and provide a quote.</p>
+    <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+      <a href="index.html#enquiry" class="btn btn-gold"><i class="fas fa-comments"></i><span>Get a Free Quote</span></a>
+      <a href="#" class="btn btn-outline" data-wa><i class="fab fa-whatsapp"></i><span>WhatsApp Us</span></a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand"><img src="assets/logos/logo-primary.png" alt="R1 Laura"><div class="footer-brand-name">R1 LAURA</div><div class="footer-brand-sub">Construction &amp; Interiors</div><p>25+ years crafting beautiful interiors in Visakhapatnam.</p></div>
+      <div class="footer-col"><h5>Pages</h5><div class="footer-links"><a href="index.html">Home</a><a href="about.html">About</a><a href="interiors.html">Interiors</a><a href="constructions.html">Constructions</a><a href="projects.html">Projects</a><a href="contact.html">Contact</a></div></div>
+      <div class="footer-col"><h5>Interiors</h5><div class="footer-links"><a href="interiors.html">Apartments</a><a href="interiors.html">Individual Homes</a><a href="interiors.html">Villas</a><a href="interiors.html">Offices</a><a href="interiors.html">Modular Kitchens</a></div></div>
+      <div class="footer-col"><h5>Contact</h5>
+        <div class="footer-contact-item"><i class="fas fa-phone"></i><span><a href="tel:+917330840545">+91 73308 40545</a></span></div>
+        <div class="footer-contact-item"><i class="fab fa-whatsapp"></i><span><a href="#" data-wa>WhatsApp Us</a></span></div>
+        <div class="footer-contact-item"><i class="fas fa-map-marker-alt"></i><span>Visakhapatnam, AP</span></div>
+      </div>
+    </div>
+    <div class="footer-bottom"><div class="footer-copy">© 2026 <span>R1 Laura</span>. All Rights Reserved.</div><a href="admin/index.html" style="font-size:0.72rem;color:var(--text-grey);opacity:0.4;">Admin</a></div>
+  </div>
+</footer>
+<div class="floating-btns">
+  <a href="tel:+917330840545" class="float-btn float-call"><i class="fas fa-phone"></i><div class="float-btn-tooltip">Call Now</div></a>
+  <a href="#" class="float-btn float-wa" data-wa><i class="fab fa-whatsapp"></i><div class="float-btn-tooltip">WhatsApp</div></a>
+</div>
+<script src="js/data.js"></script><script src="js/main.js"></script>
+</body>
+</html>

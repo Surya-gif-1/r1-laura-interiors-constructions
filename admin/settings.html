@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings — R1 Laura Admin</title>
+  <link rel="stylesheet" href="../css/admin.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+<div class="admin-layout">
+  <aside class="sidebar">
+    <div class="sidebar-logo"><img src="../assets/logos/logo-primary.png" alt="R1 Laura"><div class="sidebar-brand"><div class="sidebar-brand-name">R1 LAURA</div><div class="sidebar-brand-sub">Construction &amp; Interiors</div></div></div>
+    <div class="sidebar-admin-badge"><i class="fas fa-shield-alt"></i>Admin Panel</div>
+    <nav class="sidebar-nav">
+      <div class="sidebar-section-label">Main</div>
+      <a href="dashboard.html" class="sidebar-link"><i class="fas fa-th-large"></i>Dashboard</a>
+      <a href="enquiries.html" class="sidebar-link"><i class="fas fa-envelope"></i>Enquiries</a>
+      <div class="sidebar-section-label">Content</div>
+      <a href="projects.html" class="sidebar-link"><i class="fas fa-images"></i>Projects</a>
+      <a href="testimonials.html" class="sidebar-link"><i class="fas fa-quote-left"></i>Testimonials</a>
+      <a href="services.html" class="sidebar-link"><i class="fas fa-concierge-bell"></i>Services</a>
+      <div class="sidebar-section-label">Settings</div>
+      <a href="settings.html" class="sidebar-link active"><i class="fas fa-cog"></i>Site Settings</a>
+      <a href="../index.html" class="sidebar-link" target="_blank"><i class="fas fa-external-link-alt"></i>View Website</a>
+    </nav>
+    <div class="sidebar-footer"><button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i>Logout</button></div>
+  </aside>
+
+  <main class="admin-main">
+    <div class="admin-topbar">
+      <div><div class="topbar-title">Site Settings</div><div class="topbar-sub">Manage contact information and site content</div></div>
+    </div>
+    <div class="admin-content">
+      <div id="save-alert" class="alert alert-success" style="display:none;"><i class="fas fa-check-circle"></i>Settings saved successfully!</div>
+
+      <!-- Contact Info -->
+      <div class="card" style="margin-bottom:24px;">
+        <div class="card-header"><div class="card-title"><i class="fas fa-address-card" style="color:var(--gold);margin-right:8px;"></i>Contact Information</div></div>
+        <div class="form-grid">
+          <div class="form-group"><label class="form-label">Owner Name</label><input type="text" id="s-owner" class="form-control" placeholder="B.N. Raju"></div>
+          <div class="form-group"><label class="form-label">Phone Number</label><input type="text" id="s-phone" class="form-control" placeholder="7330840545"></div>
+          <div class="form-group"><label class="form-label">WhatsApp Number</label><input type="text" id="s-whatsapp" class="form-control" placeholder="7330840545"></div>
+          <div class="form-group"><label class="form-label">Email Address</label><input type="email" id="s-email" class="form-control" placeholder="your@email.com"></div>
+          <div class="form-group" style="grid-column:1/-1;"><label class="form-label">Location</label><input type="text" id="s-location" class="form-control" placeholder="Visakhapatnam, Andhra Pradesh, India"></div>
+        </div>
+        <button class="btn btn-gold" onclick="saveSettings()"><i class="fas fa-save"></i>Save Contact Info</button>
+      </div>
+
+      <!-- Hero Content -->
+      <div class="card" style="margin-bottom:24px;">
+        <div class="card-header"><div class="card-title"><i class="fas fa-home" style="color:var(--gold);margin-right:8px;"></i>Homepage Hero Content</div></div>
+        <div class="form-group"><label class="form-label">Hero Heading</label><textarea id="s-hero-heading" class="form-control" rows="2" placeholder="BUILDING DREAMS. DESIGNING EXCELLENCE."></textarea></div>
+        <div class="form-group"><label class="form-label">Hero Description</label><textarea id="s-hero-desc" class="form-control" rows="3" placeholder="Supporting text for the hero section..."></textarea></div>
+        <div class="form-grid">
+          <div class="form-group"><label class="form-label">Years of Experience Label</label><input type="text" id="s-stat-years" class="form-control" placeholder="25+"></div>
+          <div class="form-group"><label class="form-label">Projects Completed Label</label><input type="text" id="s-stat-projects" class="form-control" placeholder="2500+"></div>
+        </div>
+        <button class="btn btn-gold" onclick="saveSettings()"><i class="fas fa-save"></i>Save Hero Content</button>
+      </div>
+
+      <!-- Change Password -->
+      <div class="card">
+        <div class="card-header"><div class="card-title"><i class="fas fa-lock" style="color:var(--gold);margin-right:8px;"></i>Change Admin Password</div></div>
+        <div class="alert alert-info" style="margin-bottom:16px;"><i class="fas fa-info-circle"></i>Default password is <strong>admin123</strong>. Change it for security.</div>
+        <div class="form-grid">
+          <div class="form-group"><label class="form-label">New Password</label><input type="password" id="s-new-pw" class="form-control" placeholder="New password"></div>
+          <div class="form-group"><label class="form-label">Confirm Password</label><input type="password" id="s-confirm-pw" class="form-control" placeholder="Confirm new password"></div>
+        </div>
+        <div id="pw-error" style="color:#ef4444;font-size:0.82rem;margin-bottom:12px;min-height:20px;"></div>
+        <button class="btn btn-gold" onclick="changePassword()"><i class="fas fa-lock"></i>Change Password</button>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="../js/data.js"></script>
+<script>
+  if (typeof DB !== 'undefined' && !DB.isLoggedIn()) window.location.href = 'index.html';
+  function logout() { if(typeof DB!=='undefined') DB.logout(); window.location.href='index.html'; }
+
+  function loadSettings() {
+    if (typeof DB === 'undefined') return;
+    const s = DB.getSettings();
+    document.getElementById('s-owner').value = s.owner||'';
+    document.getElementById('s-phone').value = s.phone||'';
+    document.getElementById('s-whatsapp').value = s.whatsapp||'';
+    document.getElementById('s-email').value = s.email||'';
+    document.getElementById('s-location').value = s.location||'';
+    document.getElementById('s-hero-heading').value = s.heroHeading||'';
+    document.getElementById('s-hero-desc').value = s.heroDesc||'';
+    document.getElementById('s-stat-years').value = s.heroStats?.years||'25+';
+    document.getElementById('s-stat-projects').value = s.heroStats?.projects||'2500+';
+  }
+
+  function saveSettings() {
+    if (typeof DB === 'undefined') return;
+    const current = DB.getSettings();
+    const updated = {
+      ...current,
+      owner: document.getElementById('s-owner').value.trim(),
+      phone: document.getElementById('s-phone').value.trim(),
+      whatsapp: document.getElementById('s-whatsapp').value.trim(),
+      email: document.getElementById('s-email').value.trim(),
+      location: document.getElementById('s-location').value.trim(),
+      heroHeading: document.getElementById('s-hero-heading').value.trim(),
+      heroDesc: document.getElementById('s-hero-desc').value.trim(),
+      heroStats: { years: document.getElementById('s-stat-years').value.trim(), projects: document.getElementById('s-stat-projects').value.trim(), ventures: '40+' },
+    };
+    DB.saveSettings(updated);
+    const alert = document.getElementById('save-alert');
+    alert.style.display = 'flex';
+    setTimeout(() => { alert.style.display = 'none'; }, 3000);
+  }
+
+  function changePassword() {
+    const pw = document.getElementById('s-new-pw').value;
+    const confirm = document.getElementById('s-confirm-pw').value;
+    const err = document.getElementById('pw-error');
+    if (!pw) { err.textContent = 'Please enter a new password.'; return; }
+    if (pw.length < 6) { err.textContent = 'Password must be at least 6 characters.'; return; }
+    if (pw !== confirm) { err.textContent = 'Passwords do not match.'; return; }
+    DB.setAdminPassword(pw);
+    err.style.color = '#10b981';
+    err.textContent = 'Password changed successfully! You will need the new password next login.';
+    document.getElementById('s-new-pw').value = '';
+    document.getElementById('s-confirm-pw').value = '';
+    setTimeout(() => { err.textContent = ''; err.style.color = '#ef4444'; }, 4000);
+  }
+
+  document.addEventListener('DOMContentLoaded', loadSettings);
+</script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Services — R1 Laura Admin</title>
+  <link rel="stylesheet" href="../css/admin.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+<div class="admin-layout">
+  <aside class="sidebar">
+    <div class="sidebar-logo"><img src="../assets/logos/logo-primary.png" alt="R1 Laura"><div class="sidebar-brand"><div class="sidebar-brand-name">R1 LAURA</div><div class="sidebar-brand-sub">Construction &amp; Interiors</div></div></div>
+    <div class="sidebar-admin-badge"><i class="fas fa-shield-alt"></i>Admin Panel</div>
+    <nav class="sidebar-nav">
+      <div class="sidebar-section-label">Main</div>
+      <a href="dashboard.html" class="sidebar-link"><i class="fas fa-th-large"></i>Dashboard</a>
+      <a href="enquiries.html" class="sidebar-link"><i class="fas fa-envelope"></i>Enquiries</a>
+      <div class="sidebar-section-label">Content</div>
+      <a href="projects.html" class="sidebar-link"><i class="fas fa-images"></i>Projects</a>
+      <a href="testimonials.html" class="sidebar-link"><i class="fas fa-quote-left"></i>Testimonials</a>
+      <a href="services.html" class="sidebar-link active"><i class="fas fa-concierge-bell"></i>Services</a>
+      <div class="sidebar-section-label">Settings</div>
+      <a href="settings.html" class="sidebar-link"><i class="fas fa-cog"></i>Site Settings</a>
+      <a href="../index.html" class="sidebar-link" target="_blank"><i class="fas fa-external-link-alt"></i>View Website</a>
+    </nav>
+    <div class="sidebar-footer"><button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i>Logout</button></div>
+  </aside>
+
+  <main class="admin-main">
+    <div class="admin-topbar">
+      <div><div class="topbar-title">Services</div><div class="topbar-sub">The services pages are managed via the code. Use the Settings page for key contact details.</div></div>
+    </div>
+    <div class="admin-content">
+      <div class="alert alert-info" style="margin-bottom:24px;">
+        <i class="fas fa-info-circle"></i>
+        Service categories are currently displayed on the <strong>Interiors</strong> and <strong>Constructions</strong> pages. To add or edit services, update those HTML pages directly, or use this page as a note pad.
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-title">Current Service Categories</div></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+          <div>
+            <h4 style="color:var(--gold);font-size:0.85rem;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:16px;">R1 Laura Interiors</h4>
+            <div style="display:flex;flex-direction:column;gap:8px;">
+              ${['Apartment Interiors','Individual Home Interiors','Villa Interiors','Office Interiors','Modular Kitchens','Wardrobes & Storage','False Ceilings','Lighting Design','TV Units & Panelling','Living Room Design','Bedroom Design','Complete Execution'].map(s=>`<div style="display:flex;align-items:center;gap:8px;font-size:0.88rem;color:var(--text-light);padding:8px 12px;background:var(--charcoal);border-radius:2px;"><i class="fas fa-check" style="color:var(--gold);font-size:0.75rem;"></i>${s}</div>`).join('')}
+            </div>
+          </div>
+          <div>
+            <h4 style="color:var(--gold);font-size:0.85rem;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:16px;">R1 Laura Constructions</h4>
+            <div style="display:flex;flex-direction:column;gap:8px;">
+              ${['Residential Construction','Villa Construction','Apartment Projects','Commercial Construction','Turnkey Projects','Civil & Structural Works','Renovation & Extension','Exterior Elevation Works'].map(s=>`<div style="display:flex;align-items:center;gap:8px;font-size:0.88rem;color:var(--text-light);padding:8px 12px;background:var(--charcoal);border-radius:2px;"><i class="fas fa-check" style="color:var(--gold);font-size:0.75rem;"></i>${s}</div>`).join('')}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+<script src="../js/data.js"></script>
+<script>
+  if (typeof DB !== 'undefined' && !DB.isLoggedIn()) window.location.href = 'index.html';
+  function logout() { if(typeof DB!=='undefined') DB.logout(); window.location.href='index.html'; }
+</script>
+</body>
+</html>

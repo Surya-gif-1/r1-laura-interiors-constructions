@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projects — R1 Laura Admin</title>
+  <link rel="stylesheet" href="../css/admin.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+<div class="admin-layout">
+  <aside class="sidebar">
+    <div class="sidebar-logo"><img src="../assets/logos/logo-primary.png" alt="R1 Laura"><div class="sidebar-brand"><div class="sidebar-brand-name">R1 LAURA</div><div class="sidebar-brand-sub">Construction &amp; Interiors</div></div></div>
+    <div class="sidebar-admin-badge"><i class="fas fa-shield-alt"></i>Admin Panel</div>
+    <nav class="sidebar-nav">
+      <div class="sidebar-section-label">Main</div>
+      <a href="dashboard.html" class="sidebar-link"><i class="fas fa-th-large"></i>Dashboard</a>
+      <a href="enquiries.html" class="sidebar-link"><i class="fas fa-envelope"></i>Enquiries</a>
+      <div class="sidebar-section-label">Content</div>
+      <a href="projects.html" class="sidebar-link active"><i class="fas fa-images"></i>Projects</a>
+      <a href="testimonials.html" class="sidebar-link"><i class="fas fa-quote-left"></i>Testimonials</a>
+      <a href="services.html" class="sidebar-link"><i class="fas fa-concierge-bell"></i>Services</a>
+      <div class="sidebar-section-label">Settings</div>
+      <a href="settings.html" class="sidebar-link"><i class="fas fa-cog"></i>Site Settings</a>
+      <a href="../index.html" class="sidebar-link" target="_blank"><i class="fas fa-external-link-alt"></i>View Website</a>
+    </nav>
+    <div class="sidebar-footer"><button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i>Logout</button></div>
+  </aside>
+
+  <main class="admin-main">
+    <div class="admin-topbar">
+      <div><div class="topbar-title">Projects</div><div class="topbar-sub">Manage your project portfolio</div></div>
+      <div class="topbar-actions">
+        <button class="btn btn-gold" onclick="openAddModal()"><i class="fas fa-plus"></i>Add Project</button>
+      </div>
+    </div>
+    <div class="admin-content">
+      <div class="search-bar">
+        <div class="search-input-wrap"><i class="fas fa-search"></i><input type="text" class="search-input" id="search-projects" placeholder="Search projects..."></div>
+        <select class="form-control" id="filter-cat" style="width:auto;min-width:160px;">
+          <option value="all">All Categories</option>
+          <option value="interiors">Interiors</option>
+          <option value="apartments">Apartments</option>
+          <option value="individual-homes">Individual Homes</option>
+          <option value="villas">Villas</option>
+          <option value="offices">Offices</option>
+          <option value="exterior-elevations">Exterior Elevations</option>
+          <option value="construction">Construction</option>
+        </select>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-title"><i class="fas fa-images" style="color:var(--gold);margin-right:8px;"></i>All Projects</div></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Title</th><th>Category</th><th>Location</th><th>Year</th><th>Area</th><th>Featured</th><th>Actions</th></tr></thead>
+            <tbody id="projects-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Add/Edit Modal -->
+<div class="modal-bg" id="project-modal">
+  <div class="modal" style="max-width:640px;">
+    <div class="modal-header">
+      <div class="modal-title" id="modal-title">Add Project</div>
+      <button class="modal-close" onclick="closeProjectModal()"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="edit-id">
+      <div class="form-grid">
+        <div class="form-group"><label class="form-label">Project Title *</label><input type="text" id="p-title" class="form-control" placeholder="Project name"></div>
+        <div class="form-group"><label class="form-label">Category *</label>
+          <select id="p-cat" class="form-control">
+            <option value="interiors">Interiors</option>
+            <option value="apartments">Apartments</option>
+            <option value="individual-homes">Individual Homes</option>
+            <option value="villas">Villas</option>
+            <option value="offices">Offices</option>
+            <option value="exterior-elevations">Exterior Elevations</option>
+            <option value="construction">Construction</option>
+          </select>
+        </div>
+        <div class="form-group"><label class="form-label">Project Type</label><input type="text" id="p-type" class="form-control" placeholder="e.g. Apartment, Villa"></div>
+        <div class="form-group"><label class="form-label">Location</label><input type="text" id="p-location" class="form-control" placeholder="Visakhapatnam"></div>
+        <div class="form-group"><label class="form-label">Year</label><input type="text" id="p-year" class="form-control" placeholder="2024"></div>
+        <div class="form-group"><label class="form-label">Area (sq.ft)</label><input type="text" id="p-area" class="form-control" placeholder="e.g. 1500 sq.ft"></div>
+      </div>
+      <div class="form-group"><label class="form-label">Description</label><textarea id="p-desc" class="form-control" rows="3" placeholder="Brief project description"></textarea></div>
+      <div class="form-group">
+        <label class="form-label">Project Image URL</label>
+        <input type="text" id="p-image" class="form-control" placeholder="Paste image URL or upload path" oninput="previewImg(this.value)">
+        <div id="img-preview-wrap" style="margin-top:10px;display:none;">
+          <img id="img-preview-el" src="" alt="Preview" style="max-width:100%;max-height:200px;object-fit:cover;border:1px solid var(--gold-border);">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label" style="display:flex;align-items:center;gap:12px;cursor:pointer;">
+          <label class="toggle"><input type="checkbox" id="p-featured"><span class="toggle-slider"></span></label>
+          Featured Project (shown on homepage)
+        </label>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeProjectModal()">Cancel</button>
+      <button class="btn btn-gold" onclick="saveProject()"><i class="fas fa-save"></i>Save Project</button>
+    </div>
+  </div>
+</div>
+
+<script src="../js/data.js"></script>
+<script>
+  if (typeof DB !== 'undefined' && !DB.isLoggedIn()) window.location.href = 'index.html';
+  function logout() { if(typeof DB!=='undefined') DB.logout(); window.location.href='index.html'; }
+
+  let allProjects = [];
+
+  function renderProjects(list) {
+    const tbody = document.getElementById('projects-body');
+    if (!list.length) {
+      tbody.innerHTML = `<tr><td colspan="7"><div class="empty-state"><i class="fas fa-folder-open"></i><h4>No Projects</h4><p>Add your first project above.</p></div></td></tr>`;
+      return;
+    }
+    tbody.innerHTML = list.map(p => `
+      <tr>
+        <td style="color:var(--white);font-weight:500;">${p.title}</td>
+        <td><span class="badge badge-draft" style="text-transform:capitalize;">${p.category||'—'}</span></td>
+        <td style="font-size:0.82rem;color:var(--text-grey);">${p.location||'—'}</td>
+        <td style="font-size:0.82rem;">${p.year||'—'}</td>
+        <td style="font-size:0.82rem;color:var(--text-grey);">${p.area||'—'}</td>
+        <td>${p.featured?'<span class="badge badge-featured">Featured</span>':'<span style="color:var(--text-grey);font-size:0.78rem;">—</span>'}</td>
+        <td><div style="display:flex;gap:6px;">
+          <button class="btn btn-outline btn-sm btn-icon" onclick="editProject('${p.id}')"><i class="fas fa-edit"></i></button>
+          <button class="btn btn-danger btn-sm btn-icon" onclick="deleteProject('${p.id}')"><i class="fas fa-trash"></i></button>
+        </div></td>
+      </tr>
+    `).join('');
+  }
+
+  function applyFilter() {
+    const s = document.getElementById('search-projects').value.toLowerCase();
+    const cat = document.getElementById('filter-cat').value;
+    renderProjects(allProjects.filter(p =>
+      (!s || p.title.toLowerCase().includes(s)) &&
+      (cat==='all' || p.category===cat)
+    ));
+  }
+
+  function openAddModal() {
+    document.getElementById('modal-title').textContent = 'Add Project';
+    document.getElementById('edit-id').value = '';
+    ['p-title','p-type','p-location','p-year','p-area','p-desc','p-image'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('p-cat').value = 'interiors';
+    document.getElementById('p-featured').checked = false;
+    document.getElementById('img-preview-wrap').style.display='none';
+    document.getElementById('project-modal').classList.add('open');
+  }
+
+  function editProject(id) {
+    const p = allProjects.find(x => x.id === id);
+    if (!p) return;
+    document.getElementById('modal-title').textContent = 'Edit Project';
+    document.getElementById('edit-id').value = p.id;
+    document.getElementById('p-title').value = p.title||'';
+    document.getElementById('p-cat').value = p.category||'interiors';
+    document.getElementById('p-type').value = p.type||'';
+    document.getElementById('p-location').value = p.location||'';
+    document.getElementById('p-year').value = p.year||'';
+    document.getElementById('p-area').value = p.area||'';
+    document.getElementById('p-desc').value = p.desc||'';
+    document.getElementById('p-image').value = p.image||'';
+    document.getElementById('p-featured').checked = !!p.featured;
+    previewImg(p.image||'');
+    document.getElementById('project-modal').classList.add('open');
+  }
+
+  function previewImg(url) {
+    const wrap = document.getElementById('img-preview-wrap');
+    const el = document.getElementById('img-preview-el');
+    if (url) { el.src = url; wrap.style.display='block'; } else { wrap.style.display='none'; }
+  }
+
+  function saveProject() {
+    const title = document.getElementById('p-title').value.trim();
+    if (!title) { alert('Please enter a project title.'); return; }
+    const data = {
+      title, category: document.getElementById('p-cat').value,
+      type: document.getElementById('p-type').value.trim(),
+      location: document.getElementById('p-location').value.trim() || 'Visakhapatnam',
+      year: document.getElementById('p-year').value.trim(),
+      area: document.getElementById('p-area').value.trim(),
+      desc: document.getElementById('p-desc').value.trim(),
+      image: document.getElementById('p-image').value.trim(),
+      featured: document.getElementById('p-featured').checked,
+    };
+    const editId = document.getElementById('edit-id').value;
+    if (editId) { DB.updateProject(editId, data); }
+    else { DB.addProject(data); }
+    allProjects = DB.getProjects();
+    applyFilter();
+    closeProjectModal();
+  }
+
+  function deleteProject(id) {
+    if (!confirm('Delete this project?')) return;
+    DB.deleteProject(id);
+    allProjects = DB.getProjects();
+    applyFilter();
+  }
+
+  function closeProjectModal() { document.getElementById('project-modal').classList.remove('open'); }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    allProjects = typeof DB !== 'undefined' ? DB.getProjects() : [];
+    renderProjects(allProjects);
+    document.getElementById('search-projects').addEventListener('input', applyFilter);
+    document.getElementById('filter-cat').addEventListener('change', applyFilter);
+  });
+</script>
+</body>
+</html>

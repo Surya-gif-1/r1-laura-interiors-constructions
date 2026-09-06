@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Testimonials — R1 Laura Admin</title>
+  <link rel="stylesheet" href="../css/admin.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+<div class="admin-layout">
+  <aside class="sidebar">
+    <div class="sidebar-logo"><img src="../assets/logos/logo-primary.png" alt="R1 Laura"><div class="sidebar-brand"><div class="sidebar-brand-name">R1 LAURA</div><div class="sidebar-brand-sub">Construction &amp; Interiors</div></div></div>
+    <div class="sidebar-admin-badge"><i class="fas fa-shield-alt"></i>Admin Panel</div>
+    <nav class="sidebar-nav">
+      <div class="sidebar-section-label">Main</div>
+      <a href="dashboard.html" class="sidebar-link"><i class="fas fa-th-large"></i>Dashboard</a>
+      <a href="enquiries.html" class="sidebar-link"><i class="fas fa-envelope"></i>Enquiries</a>
+      <div class="sidebar-section-label">Content</div>
+      <a href="projects.html" class="sidebar-link"><i class="fas fa-images"></i>Projects</a>
+      <a href="testimonials.html" class="sidebar-link active"><i class="fas fa-quote-left"></i>Testimonials</a>
+      <a href="services.html" class="sidebar-link"><i class="fas fa-concierge-bell"></i>Services</a>
+      <div class="sidebar-section-label">Settings</div>
+      <a href="settings.html" class="sidebar-link"><i class="fas fa-cog"></i>Site Settings</a>
+      <a href="../index.html" class="sidebar-link" target="_blank"><i class="fas fa-external-link-alt"></i>View Website</a>
+    </nav>
+    <div class="sidebar-footer"><button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i>Logout</button></div>
+  </aside>
+
+  <main class="admin-main">
+    <div class="admin-topbar">
+      <div><div class="topbar-title">Testimonials</div><div class="topbar-sub">Manage client testimonials</div></div>
+      <div class="topbar-actions"><button class="btn btn-gold" onclick="openAddModal()"><i class="fas fa-plus"></i>Add Testimonial</button></div>
+    </div>
+    <div class="admin-content">
+      <div class="alert alert-info"><i class="fas fa-info-circle"></i>Only <strong>published</strong> testimonials will appear on the website. Use the toggle to publish/unpublish.</div>
+      <div class="card">
+        <div class="card-header"><div class="card-title"><i class="fas fa-quote-left" style="color:var(--gold);margin-right:8px;"></i>All Testimonials</div></div>
+        <div id="testimonials-list"></div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Add/Edit Modal -->
+<div class="modal-bg" id="testimonial-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="t-modal-title">Add Testimonial</div>
+      <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="t-edit-id">
+      <div class="form-group"><label class="form-label">Client Name *</label><input type="text" id="t-name" class="form-control" placeholder="Client's full name"></div>
+      <div class="form-grid">
+        <div class="form-group"><label class="form-label">Project Type</label><input type="text" id="t-project" class="form-control" placeholder="e.g. Apartment Interiors"></div>
+        <div class="form-group"><label class="form-label">Location</label><input type="text" id="t-location" class="form-control" placeholder="Visakhapatnam"></div>
+      </div>
+      <div class="form-group"><label class="form-label">Testimonial *</label><textarea id="t-text" class="form-control" rows="4" placeholder="Client's testimonial text..."></textarea></div>
+      <div class="form-group">
+        <label class="form-label" style="display:flex;align-items:center;gap:12px;cursor:pointer;">
+          <label class="toggle"><input type="checkbox" id="t-published"><span class="toggle-slider"></span></label>
+          Published (visible on website)
+        </label>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-gold" onclick="saveTestimonial()"><i class="fas fa-save"></i>Save</button>
+    </div>
+  </div>
+</div>
+
+<script src="../js/data.js"></script>
+<script>
+  if (typeof DB !== 'undefined' && !DB.isLoggedIn()) window.location.href = 'index.html';
+  function logout() { if(typeof DB!=='undefined') DB.logout(); window.location.href='index.html'; }
+
+  function renderTestimonials() {
+    const list = typeof DB !== 'undefined' ? DB.getTestimonials() : [];
+    const container = document.getElementById('testimonials-list');
+    if (!list.length) {
+      container.innerHTML = `<div class="empty-state"><i class="fas fa-quote-left"></i><h4>No Testimonials</h4><p>Add your first client testimonial.</p></div>`;
+      return;
+    }
+    container.innerHTML = list.map(t => `
+      <div style="padding:20px 24px;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;align-items:flex-start;gap:16px;">
+        <div style="flex:1;">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;">
+            <span style="font-weight:600;color:var(--white);">${t.name}</span>
+            <span class="badge ${t.published?'badge-published':'badge-draft'}">${t.published?'Published':'Draft'}</span>
+          </div>
+          <div style="font-size:0.78rem;color:var(--gold);margin-bottom:8px;">${t.project||'—'} · ${t.location||'—'}</div>
+          <p style="font-size:0.88rem;color:var(--text-grey);line-height:1.6;font-style:italic;">"${t.text}"</p>
+        </div>
+        <div style="display:flex;gap:6px;flex-shrink:0;">
+          <button class="btn btn-sm" style="background:${t.published?'rgba(239,68,68,0.1)':'rgba(16,185,129,0.1)'};color:${t.published?'#ef4444':'#10b981'};border:1px solid ${t.published?'rgba(239,68,68,0.3)':'rgba(16,185,129,0.3)'};" onclick="togglePublish('${t.id}',${!t.published})">
+            <i class="fas fa-${t.published?'eye-slash':'eye'}"></i> ${t.published?'Unpublish':'Publish'}
+          </button>
+          <button class="btn btn-outline btn-sm btn-icon" onclick="editTestimonial('${t.id}')"><i class="fas fa-edit"></i></button>
+          <button class="btn btn-danger btn-sm btn-icon" onclick="deleteTestimonial('${t.id}')"><i class="fas fa-trash"></i></button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function openAddModal() {
+    document.getElementById('t-modal-title').textContent = 'Add Testimonial';
+    document.getElementById('t-edit-id').value = '';
+    ['t-name','t-project','t-location','t-text'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('t-published').checked = false;
+    document.getElementById('testimonial-modal').classList.add('open');
+  }
+
+  function editTestimonial(id) {
+    const t = DB.getTestimonials().find(x => x.id === id);
+    if (!t) return;
+    document.getElementById('t-modal-title').textContent = 'Edit Testimonial';
+    document.getElementById('t-edit-id').value = t.id;
+    document.getElementById('t-name').value = t.name||'';
+    document.getElementById('t-project').value = t.project||'';
+    document.getElementById('t-location').value = t.location||'';
+    document.getElementById('t-text').value = t.text||'';
+    document.getElementById('t-published').checked = !!t.published;
+    document.getElementById('testimonial-modal').classList.add('open');
+  }
+
+  function saveTestimonial() {
+    const name = document.getElementById('t-name').value.trim();
+    const text = document.getElementById('t-text').value.trim();
+    if (!name || !text) { alert('Name and testimonial text are required.'); return; }
+    const data = { name, project: document.getElementById('t-project').value.trim(), location: document.getElementById('t-location').value.trim() || 'Visakhapatnam', text, published: document.getElementById('t-published').checked };
+    const editId = document.getElementById('t-edit-id').value;
+    if (editId) DB.updateTestimonial(editId, data);
+    else DB.addTestimonial(data);
+    renderTestimonials();
+    closeModal();
+  }
+
+  function togglePublish(id, pub) { DB.updateTestimonial(id, { published: pub }); renderTestimonials(); }
+  function deleteTestimonial(id) { if (!confirm('Delete testimonial?')) return; DB.deleteTestimonial(id); renderTestimonials(); }
+  function closeModal() { document.getElementById('testimonial-modal').classList.remove('open'); }
+
+  document.addEventListener('DOMContentLoaded', renderTestimonials);
+</script>
+</body>
+</html>
